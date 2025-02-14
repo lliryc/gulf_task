@@ -20,7 +20,7 @@ def download(video_id, video_url, duration_in_sec):
     command = [
         'yt-dlp',
         video_url,
-        '-o', f'lev_videos_6mins/{video_id}.%(ext)s'
+        '-o', f'gulf_videos_6mins/{video_id}.%(ext)s'
     ]
 
     if duration_in_sec:
@@ -40,11 +40,11 @@ def download(video_id, video_url, duration_in_sec):
 # download(video_url)
 
 def get_processed_video_ids():
-    videos = list(glob.glob("lev_videos_6mins/*.*"))
+    videos = list(glob.glob("gulf_videos_6mins/*.*"))
     return set([video.split("/")[-1].split(".")[0] for video in videos])
 
 if __name__ == "__main__":
-    df = pd.read_csv("lev_channels_videos_presampled.csv")
+    df = pd.read_csv("gulf_channels_videos_presampled.csv")
     processed_video_ids = get_processed_video_ids()
     for index, row in tqdm.tqdm(df.iterrows()):
         video_id = extract_video_id(row["video_url"])

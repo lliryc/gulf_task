@@ -60,28 +60,28 @@ def presample_videos(sample_size):
         cdf = pd.concat([cdf, df])
         
     print(len(cdf))
-    cdf.to_csv("lev_channels_videos_presampled.csv", index=False)
+    cdf.to_csv("gulf_channels_videos_presampled.csv", index=False)
 
 
 def get_transcripts_metadata():
   
     script_directory = os.path.dirname(os.path.abspath(__file__))
     
-    with open(os.path.join(script_directory, "lev_channels.txt"), "r") as playlist_file:
+    with open(os.path.join(script_directory, "gulf_channels.txt"), "r") as playlist_file:
         playlist_urls = playlist_file.readlines()
         
     playlist_urls = [url.strip() for url in playlist_urls]
     
     playlist_urls = [url for url in set(playlist_urls)]
   
-    with open(os.path.join(script_directory, "lev_channels_processed.txt"), "r") as processed_file:
+    with open(os.path.join(script_directory, "gulf_channels_processed.txt"), "r") as processed_file:
         processed = processed_file.readlines()
         
     processed = set([url.strip() for url in processed])
     
     playlist_urls = [url for url in playlist_urls if url not in processed]
         
-    with open(os.path.join(script_directory, "lev_channels_processed.txt"), "a") as processed_file:
+    with open(os.path.join(script_directory, "gulf_channels_processed.txt"), "a") as processed_file:
       
         playlists_len = len(playlist_urls)
         
@@ -114,7 +114,7 @@ def get_transcripts_metadata():
               
               lev_channel_df.drop(columns=["duration"], inplace=True)
               
-              lev_channel_df.to_csv(os.path.join(script_directory, "lev_channels_videos", f"{channel_id}.csv"), index=False)
+              lev_channel_df.to_csv(os.path.join(script_directory, "gulf_channels_videos", f"{channel_id}.csv"), index=False)
               # Print each metadata line (duration, upload_date)
               for line in results:
                   print(line)
