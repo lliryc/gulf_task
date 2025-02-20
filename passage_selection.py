@@ -22,7 +22,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 prompt = ChatPromptTemplate.from_template("""You are professional linguist. You are helping me with following:
-Extract passage from a source text in Levantine Arabic for reading comprehension task. 
+Extract passage from a source text in Gulf Arabic for reading comprehension task. 
 ### Target audience: Native/proficient speakers.
 ### Passage selection criteria: 
 - Select a consistent part of a source text suitable for inference and analytical questions
@@ -62,7 +62,7 @@ def extract(text):
 
 
 def get_processed_passages():
-  with open("lev_processed_passages.txt", "r") as f:
+  with open("gulf_processed_passages.txt", "r") as f:
     lines = f.readlines()
     return set([line.strip() for line in lines])
 
@@ -85,7 +85,7 @@ def get_punkt_indices(text):
 processed_passages = get_processed_passages()
 
 def add_processed_passages(files):
-  with open("lev_processed_passages.txt", "a") as f:
+  with open("gulf_processed_passages.txt", "a") as f:
     for file in files:
       f.write(file + "\n")
 
@@ -156,7 +156,7 @@ def extract_passage(source_text_file):
     return False
   
   if cnt_tokens <= 600:
-    output_file = f"lev_passages/{filename}"
+    output_file = f"gulf_passages/{filename}"
     with open(output_file, "w") as f:
       f.write(text)
     print(f"{output_file} is saved")
@@ -200,7 +200,7 @@ def extract_passage(source_text_file):
       continue
     
   if passage is not None:
-    output_file = f"lev_passages/{filename}"
+    output_file = f"gulf_passages/{filename}"
     with open(output_file, "w") as f:
       f.write(passage)
     print(f"{output_file} is saved")
@@ -208,7 +208,7 @@ def extract_passage(source_text_file):
   return passage is not None
 
 if __name__ == "__main__":    
-    input_files = glob.glob("lev_videos_texts_punct_corrected/*.txt")
+    input_files = glob.glob("gulf_videos_texts_punct_corrected/*.txt")
     processed = get_processed_passages()
     input_files = [file for file in input_files if file not in processed]
 

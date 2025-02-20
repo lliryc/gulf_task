@@ -30,7 +30,7 @@ def write_processed_transcript(video_id):
 
 if __name__ == "__main__":
     
-    df = pd.read_csv("lev_channels_videos_presampled.csv")
+    df = pd.read_csv("gulf_channels_videos_presampled.csv")
     
     processed_transcripts = get_processed_transcripts()
     
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             print(f"Failed to get transcript for {video_id}")
             continue    
 
-        with open(f"lev_videos_transcripts/{video_id}.json", 'w') as f:
+        with open(f"gulf_videos_transcripts/{video_id}.json", 'w') as f:
 
             json.dump(transcript["transcript"], f)
 

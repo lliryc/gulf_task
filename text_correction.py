@@ -15,7 +15,7 @@ load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-punctuation_prompt = ChatPromptTemplate.from_template("""You are Levantine Arabic speaker. Your task is to correct the punctuation in the Levantine Arabic text below. Don't change words, just correct the punctuation. Return only the corrected text without any other explanation.
+punctuation_prompt = ChatPromptTemplate.from_template("""You are Gulf Arabic speaker. Your task is to correct the punctuation in the Gulf Arabic text below. Don't change words, just correct the punctuation. Return only the corrected text without any other explanation.
 
 {text}""")
 
@@ -50,21 +50,21 @@ def paragraph_required(text):
         return False    
     return True
 
-paragraphs_prompt = ChatPromptTemplate.from_template("""You are Levantine Arabic speaker. Your task is to split Levantine Arabic text into paragraphs if it makes sense. Otherwise, return the original text. Don't change words and punctuation. Return only the corrected text without any disclaimers.
+paragraphs_prompt = ChatPromptTemplate.from_template("""You are Gulf Arabic speaker. Your task is to split Gulf Arabic text into paragraphs if it makes sense. Otherwise, return the original text. Don't change words and punctuation. Return only the corrected text without any disclaimers.
 
 {text}""")
 
 
 if __name__ == "__main__":
 
-    for file in tqdm(glob.glob("lev_videos_texts_check/*.txt")):
+    for file in tqdm(glob.glob("gulf_videos_texts_check/*.txt")):
         file_name = file.split("/")[-1]
         processed = False
         
         with open(file, "r", encoding="utf-8") as f:
             raw_text = f.read()
         
-        with open(f"lev_videos_texts_punct_corrected/{file_name}", "w", encoding="utf-8") as f:
+        with open(f"gulf_videos_texts_punct_corrected/{file_name}", "w", encoding="utf-8") as f:
             speakers_blocks = raw_text.split("\n\n\n\n")
             for speaker_block in speakers_blocks:
                 if speaker_block.strip() == "":
@@ -116,7 +116,7 @@ if __name__ == "__main__":
         
         if not processed:
             print(f"Failed to process {file_name}")
-            os.remove(f"lev_videos_texts_punct_corrected/{file_name}")
+            os.remove(f"gulf_videos_texts_punct_corrected/{file_name}")
 
 
 
