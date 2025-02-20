@@ -182,3 +182,5 @@ gulf_videos_6mins/
 gulf_videos_transcripts/
 gulf_videos_texts_punct_corrected/
 gulf_passages/
+nohup*
+*.whl

@@ -26,7 +26,7 @@ def get_processed_files():
     return set(processed_files)
 
 def diarize():
-    files = list(glob('lev_videos_6mins/*.mkv'))
+    files = list(glob('gulf_videos_6mins/*.webm'))
     f_len = len(files)
     processed_files = get_processed_files()
     for i, file in enumerate(files):

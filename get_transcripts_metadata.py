@@ -40,8 +40,8 @@ def fetch_video_metadata(video_url):
 
 def presample_videos(sample_size):
     cdf = pd.DataFrame()
-    for file in os.listdir("lev_channels_videos"):
-        df = pd.read_csv(f"lev_channels_videos/{file}")
+    for file in os.listdir("gulf_channels_videos"):
+        df = pd.read_csv(f"gulf_channels_videos/{file}")
         # Convert upload_date to datetime
         df['upload_date'] = pd.to_datetime(df['upload_date'], format='%Y%m%d')
 
@@ -52,7 +52,7 @@ def presample_videos(sample_size):
         #df = df[df['duration_in_sec'] >= 360]
 
         # Step 3: Filter out videos with upload_date earlier than 5 months ago
-        n_months_ago = datetime.now() - timedelta(days=12 * 30)  # Approximate 5 months as 150 days
+        n_months_ago = datetime.now() - timedelta(days=3 * 30)  # Approximate 5 months as 150 days
         df = df[df['upload_date'] >= n_months_ago]
         
         if len(df) > sample_size:
@@ -127,4 +127,4 @@ def get_transcripts_metadata():
 
 if __name__ == "__main__":
     #get_transcripts_metadata()
-    presample_videos(200)
+    presample_videos(50)
