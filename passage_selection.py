@@ -39,7 +39,7 @@ Extract passage from a source text in Gulf Arabic for reading comprehension task
 {text}""")
 
 # Anthropic model
-llm_openai = ChatOpenAI(api_key=OPENAI_API_KEY, model="o1-mini")
+llm_openai = ChatOpenAI(api_key=OPENAI_API_KEY, model="o3-mini")
 
 chain_openai = prompt | llm_openai
 
@@ -67,7 +67,7 @@ def get_processed_passages():
     return set([line.strip() for line in lines])
 
 def get_speaker_indices(text):
-  matches = re.finditer(r'\*\* ', text)
+  matches = re.finditer(r'\[\d+', text)
   positions = [match.start() for match in matches]
   return positions
 
@@ -91,7 +91,7 @@ def add_processed_passages(files):
 
 def preprocess_text(text):
   text = text.replace("\n\n\n\n", "\n\n")
-  text = re.sub(r'\[[^\]]*\]', ' ', text)
+  #text = re.sub(r'\[[^\]]*\]', ' ', text)
   return text
 
 def align_start(start, punkt_indices, speaker_indices):
@@ -132,14 +132,12 @@ def get_speaker(speaker_indices, start, text):
   
   else:
     start_speaker = speaker_indices[start_index - 1]
-    speaker_text = text[start_speaker:start_speaker + 3]    
-    pos = start_speaker + 3
-    while speaker_text[-3:] != " **" and pos < len(text):
-      speaker_text += text[pos]
-      pos += 1
-  
-  return speaker_text
-
+    pattern = r'^\[(\d+) - (\d+)\]\s+\*\*\s+(\d+)\s+[\u0600-\u06FF\s]+\*\*'
+    matches = re.finditer(pattern, text[start_speaker:start_speaker+100])
+    for match in matches:
+      if match.start() == 0:
+        return match.group(0)
+    return None
 
 def extract_passage(source_text_file):
   filename = source_text_file.split("/")[-1]
@@ -186,7 +184,7 @@ def extract_passage(source_text_file):
       if cnt_tokens < 200 or cnt_tokens > 650:
         raise Exception(f"Invalid passage size: {cnt_tokens}")
       
-      if not test_passage.startswith("** "):
+      if not re.match(r'^\[\d+', test_passage):
         speaker_label = get_speaker(speaker_indices, start, text)
         test_passage = speaker_label + "\n" + test_passage.lstrip()
       passage = test_passage

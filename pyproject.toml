@@ -26,6 +26,9 @@ langchain-openai = "^0.3.1"
 langchain-google-genai = "^2.0.9"
 langchain-anthropic = "^0.3.4"
 pyarabic = "^0.6.15"
+google-api-python-client = "^2.161.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
 
 
 [build-system]

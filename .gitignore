@@ -184,3 +184,4 @@ gulf_videos_texts_punct_corrected/
 gulf_passages/
 nohup*
 *.whl
+google_api_credentials*.json
